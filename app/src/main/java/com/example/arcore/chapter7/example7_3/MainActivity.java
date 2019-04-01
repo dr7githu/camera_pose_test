@@ -33,6 +33,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -126,6 +127,7 @@ public class MainActivity extends Activity implements SensorEventListener, Locat
     private Button ArCameraBtn;
     private String cLon = "";
     private String cLat = "";
+    final int REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_ = 1001;
 
 
     @Override
@@ -308,6 +310,10 @@ public class MainActivity extends Activity implements SensorEventListener, Locat
                             mTextView.setText(mTextString);
                         }
                     });
+
+                    if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_);
+                    }
 
                     mRenderer.setProjectionMatrix(projMatrix);
                     mRenderer.updateViewMatrix(viewMatrix);
